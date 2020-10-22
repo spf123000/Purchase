@@ -100,7 +100,7 @@ class MysqldbHelper(object):
         sql = sql + ') ENGINE=InnoDB DEFAULT CHARSET=utf8'
         print('creatTable:'+sql)
         self.executeCommit(sql)
-
+        
     def executeSql(self,sql=''):
         """执行sql语句，针对读操作返回结果集
 

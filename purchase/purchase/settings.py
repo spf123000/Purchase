@@ -77,7 +77,11 @@ WSGI_APPLICATION = 'purchase.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': 'purchase',
+        'USER': 'root',
+        'PASSWORD':'123456',
+        'HOST':'127.0.0.1',
+        'PORT':'3306',
     }
 }
 
