@@ -1,0 +1,223 @@
+{% extends "index.html" %}
+{% block details %}
+    
+<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<div class="page-header">
+				<h1>
+					物资信息 <small>Subtext for header</small>
+				</h1>
+			</div>
+			<table class="table table-hover table-striped">
+				<thead>
+					<tr>
+						<th>
+							编号
+						</th>
+						<th>
+							产品
+						</th>
+						<th>
+							交付时间
+						</th>
+						<th>
+							状态
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							1
+						</td>
+						<td>
+							TB - Monthly
+						</td>
+						<td>
+							01/04/2012
+						</td>
+						<td>
+							Default
+						</td>
+					</tr>
+					<tr class="success">
+						<td>
+							1
+						</td>
+						<td>
+							TB - Monthly
+						</td>
+						<td>
+							01/04/2012
+						</td>
+						<td>
+							Approved
+						</td>
+					</tr>
+					<tr class="error">
+						<td>
+							2
+						</td>
+						<td>
+							TB - Monthly
+						</td>
+						<td>
+							02/04/2012
+						</td>
+						<td>
+							Declined
+						</td>
+					</tr>
+					<tr class="warning">
+						<td>
+							3
+						</td>
+						<td>
+							TB - Monthly
+						</td>
+						<td>
+							03/04/2012
+						</td>
+						<td>
+							Pending
+						</td>
+					</tr>
+					<tr class="info">
+						<td>
+							4
+						</td>
+						<td>
+							TB - Monthly
+						</td>
+						<td>
+							04/04/2012
+						</td>
+						<td>
+							Call in to confirm
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+
+    <div class="panel panel-info">
+        <div class="panel-heading">物资导入</div>
+        <table class="table">
+            <tr>
+                <td>ID</td>
+                <td>物资链接</td>
+                <td>物资名称</td>
+                <td>物资数量</td>
+                <td>价格</td>
+                <td>备注</td>
+            </tr>
+            {% for item in items %}
+                <tr>
+                    <td>
+                        {{ item.storage_id }}
+                    </td>
+                    <td>
+                        {{ item.storage_link }}
+                    </td>
+                    <td>
+                        {{ item.storage_name }}
+                    </td>
+                    <td>
+                        <input type="text" id='storage_num' name="storage_num" class="form-control" placeholder="货物数量"
+                               aria-describedby="sizing-addon3">
+                    </td>
+                    <td>
+                        {{ item.storage_price }}
+                    </td>
+                    <td>
+                        <input type="text" id='storage_remark' name="storage_remark" class="form-control" placeholder="备注"
+                               aria-describedby="sizing-addon3">
+                    </td>
+                    <td>
+                        <form action="/storage/">
+                            <div class="btn-group" role="group" aria-label="...">
+                                <button onclick="storage_delete({{ item.storage_id }})" type="button" class="btn btn-default">删除
+                                </button>
+                            </div>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+
+            <div class="input-group input-group-sm">
+                <tr>
+
+                    <td>
+                        <input type="text" id="goods_id" name="goods_id" class="form-control" placeholder="货物编号"
+                               aria-describedby="sizing-addon3">
+                    </td>
+                    <td>
+                        <input type="text" id='goods_name' name="goods_name" class="form-control" placeholder="货物名字"
+                               aria-describedby="sizing-addon3">
+                    </td>
+                    <td>
+                        <input type="text" id='goods_num' name="goods_num" class="form-control" placeholder="货物数量"
+                               aria-describedby="sizing-addon3">
+                    </td>
+                    <td>
+                        <input type="text" id='goods_sort' name="goods_sort" class="form-control" placeholder="货物类别"
+                               aria-describedby="sizing-addon3">
+                    </td>
+                    <td>
+                        <input type="text" id='goods_remark' name="goods_remark" class="form-control" placeholder="备注"
+                               aria-describedby="sizing-addon3">
+                    </td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="...">
+                            <button onclick="send()" type="button" class="btn btn-default">增加</button>
+                        </div>
+                    </td>
+                </tr>
+            </div>
+        </table>
+    </div>
+
+    <script type="text/javascript">
+        function send() {
+            sendData = {
+                "goods_id": document.getElementById("goods_id").value,
+                "goods_name": document.getElementById("goods_name").value,
+                "goods_num": document.getElementById("goods_num").value,
+                "goods_sort": document.getElementById("goods_sort").value,
+                "goods_remark": document.getElementById("goods_remark").value,
+            };
+            $.ajax({
+                traditional: true,
+                url: "/goods/",
+                type: 'get',
+                data: sendData,
+                dataType: "json",
+                success: function (data) {
+                    location.reload()
+                }
+            })
+        }
+
+        function goods_delete(goods_id) {
+            sendData = {
+                "goods_id": goods_id,
+            };
+            $.ajax({
+                traditional: true,
+                url: "/goods_delete/",
+                type: 'get',
+                data: sendData,
+                dataType: "json",
+                success: function (data) {
+                    location.reload()
+                }
+            })
+        }
+    </script>
+
+{% endblock %}
+

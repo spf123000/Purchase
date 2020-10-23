@@ -302,25 +302,25 @@ class MysqldbHelper(object):
             else:
                 return True
 
-if __name__ == "__main__":
-    mydb = MysqldbHelper()
-    print(mydb.getVersion())
-    table='test_mysqldb'
-    attrs={'name':'varchar(200) DEFAULT NULL','age':'int(11) DEFAULT NULL'}
-    constraint='PRIMARY KEY(`id`)'
-    print(mydb.creatTable(table, attrs, constraint))
-    params = {"name" : "caixinglong", "age" : "38"}
-    mydb.insert('test_mysqldb', params)
-    print(mydb.select(table))
-    print(mydb.select(table, fields=["name", "age"]))
-    print( mydb.select(table, fields=["age", "name"]))
-    key = ["id" ,"name", "age"]
-    value = [[101, "liuqiao", "25"], [102,"liuqiao1", "26"], [103 ,"liuqiao2", "27"], [108 ,"liuqiao3", "28"]]
-    mydb.insertMany(table, key, value)
-    mydb.delete(table, params)
-    cond_dict = {"name" : "liuqiao", "age" : "18"}
-    mydb.update(table, params, cond_dict)
-    # mydb.deleteTable(table)
-    # mydb.dropTable(table)
-    print(mydb.select(table+ "1"))
-    print( mydb.isExistTable(table+ "1"))
+# if __name__ == "__main__":
+#     mydb = MysqldbHelper()
+#     print(mydb.getVersion())
+#     table='test_mysqldb'
+#     attrs={'name':'varchar(200) DEFAULT NULL','age':'int(11) DEFAULT NULL'}
+#     constraint='PRIMARY KEY(`id`)'
+#     print(mydb.creatTable(table, attrs, constraint))
+#     params = {"name" : "caixinglong", "age" : "38"}
+#     mydb.insert('test_mysqldb', params)
+#     print(mydb.select(table))
+#     print(mydb.select(table, fields=["name", "age"]))
+#     print( mydb.select(table, fields=["age", "name"]))
+#     key = ["id" ,"name", "age"]
+#     value = [[101, "liuqiao", "25"], [102,"liuqiao1", "26"], [103 ,"liuqiao2", "27"], [108 ,"liuqiao3", "28"]]
+#     mydb.insertMany(table, key, value)
+#     mydb.delete(table, params)
+#     cond_dict = {"name" : "liuqiao", "age" : "18"}
+#     mydb.update(table, params, cond_dict)
+#     # mydb.deleteTable(table)
+#     # mydb.dropTable(table)
+#     print(mydb.select(table+ "1"))
+#     print( mydb.isExistTable(table+ "1"))

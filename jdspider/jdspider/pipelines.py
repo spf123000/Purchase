@@ -5,10 +5,7 @@
 
 
 # useful for handling different item types with a single interface
-import sys
-
-sys.path.append('../../../')
-from mysql.mysql import MysqldbHelper
+from .mysql import MysqldbHelper
 
 
 class JdspiderPipeline(MysqldbHelper):
