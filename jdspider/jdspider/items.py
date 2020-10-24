@@ -9,6 +9,7 @@ import scrapy
 class JdspiderItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
-    storage_link = scrapy.Field()
-    storage_name = scrapy.Field()
-    storage_price = scrapy.Field()
+    commodity_id = scrapy.Field()
+    commodity_link = scrapy.Field()
+    commodity_name = scrapy.Field()
+    commodity_price = scrapy.Field()

@@ -1,5 +1,6 @@
 import scrapy
 from collections import deque
+import re
 
 from jdspider.items import JdspiderItem
 
@@ -20,7 +21,8 @@ class JdSpider(scrapy.Spider):
 
     def parse(self, response):
         item = JdspiderItem()
-        item['storage_link'] = response.url
-        item['storage_name'] = response.xpath('//*[@id="itemName"]')[0].xpath('string(.)').extract_first().strip()
-        item['storage_price'] = response.xpath('//*[@id="priceSale"]')[0].xpath('string(.)').extract_first().strip()
+        item['commodity_id'] = re.search(r'\d+', response.url).group()
+        item['commodity_link'] = response.url
+        item['commodity_name'] = response.xpath('//*[@id="itemName"]')[0].xpath('string(.)').extract_first().strip()
+        item['commodity_price'] = response.xpath('//*[@id="priceSale"]')[0].xpath('string(.)').extract_first().strip()
         yield item

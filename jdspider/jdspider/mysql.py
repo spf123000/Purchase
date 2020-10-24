@@ -52,7 +52,8 @@ class MysqldbHelper(object):
         self.port = port
         self.con = None
         self.cur = None
-        try:
+        pymysql.connect(host=self.host, user=self.username, passwd=self.password, port=self.port).cursor().execute("CREATE DATABASE IF NOT EXISTS " + database)
+        try:            
             self.con = pymysql.connect(host=self.host, user=self.username, passwd=self.password, port=self.port, db=self.database)
             # 所有的查询，都在连接 con 的一个模块 cursor 上面运行的
             self.cur = self.con.cursor()

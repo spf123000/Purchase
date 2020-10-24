@@ -1,0 +1,129 @@
+{% extends "index.html" %}
+{% block details %}
+    
+<div class="container">
+    <div class="page-header">
+        <h1>
+            商品管理 <small>第三季度集采</small>
+        </h1>
+    </div>
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>商品ID</th>
+                <th>商品链接</th>
+                <th>商品名称</th>
+                <th>商品数量</th>
+                <th>单价</th>
+                <th>总价</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td>
+                    {{ item.commodity_id }}
+                </td>
+                <td>
+                    {{ item.commodity_link }}
+                </td>
+                <td>
+                    {{ item.commodity_name }}
+                </td>
+                <td>
+                    <input type="text" id='commodity_num' name="commodity_num" class="form-control" placeholder="数量"
+                        aria-describedby="sizing-addon3">
+                </td>
+                <td>
+                    {{ item.commodity_price }}
+                </td>
+                <td>
+                    <input type="text" id='commodity_total' name="commodity_total" class="form-control" placeholder="总价"
+                        aria-describedby="sizing-addon3">
+                </td>
+                <td>
+                    <form action="/commodity/">
+                        <div class="btn-group" role="group" aria-label="...">
+                            <button onclick="commodity_delete({{ item.commodity_id }})" type="button" class="btn btn-default">删除
+                            </button>
+                        </div>
+                    </form>
+                </td>
+            </tr>
+            
+            {% endfor %}
+            <tr>
+                <td>
+                    <input type="text" id='commodity_id' name="commodity_id" class="form-control" placeholder="商品id"
+                            aria-describedby="sizing-addon3">
+                </td>
+                <td>
+                    <input type="text" id='commodity_link' name="commodity_link" class="form-control" placeholder="商品链接"
+                            aria-describedby="sizing-addon3">
+                </td>
+                <td>
+                    <input type="text" id='commodity_name' name="commodity_name" class="form-control" placeholder="商品名称"
+                            aria-describedby="sizing-addon3">
+                </td>
+                <td>
+                    <input type="text" id='commodity_num1' name="commodity_num1" class="form-control" placeholder="数量"
+                        aria-describedby="sizing-addon3">
+                </td>
+                <td>
+                    <input type="text" id='commodity_price' name="commodity_price" class="form-control" placeholder="单价"
+                            aria-describedby="sizing-addon3">
+                </td>
+                <td>
+                    <input disabled='disabled' type="text" id='commodity_total1' name="commodity_total1" class="form-control" placeholder="总价"
+                            aria-describedby="sizing-addon3">
+                </td>
+                <td>
+                    <div class="btn-group" role="group" aria-label="...">
+                        <button onclick="send()" type="button" class="btn btn-default">增加</button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>             
+    </table>
+</div>
+<!-- 
+<script type="text/javascript">
+    function send() {
+        sendData = {
+            "commodity_id": document.getElementById("commodity_id").value,
+            "commodity_name": document.getElementById("commodity_name").value,
+            "commodity_num": document.getElementById("commodity_num").value,
+            "commodity_sort": document.getElementById("commodity_sort").value,
+            "commodity_remark": document.getElementById("commodity_remark").value,
+        };
+        $.ajax({
+            traditional: true,
+            url: "/commodity/",
+            type: 'get',
+            data: sendData,
+            dataType: "json",
+            success: function (data) {
+                location.reload()
+            }
+        })
+    }
+
+    function commodity_delete(commodity_id) {
+        sendData = {
+            "commodity_id": commodity_id,
+        };
+        $.ajax({
+            traditional: true,
+            url: "/commodity_delete/",
+            type: 'get',
+            data: sendData,
+            dataType: "json",
+            success: function (data) {
+                location.reload()
+            }
+        })
+    }
+</script> -->
+
+{% endblock %}
+

@@ -13,5 +13,5 @@ class JdspiderPipeline(MysqldbHelper):
         super().__init__()
 
     def process_item(self, item, spider):
-        self.insert('storage_storage', item)
+        self.insert('commodity_commodity', item)
         return item
