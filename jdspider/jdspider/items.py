@@ -13,3 +13,5 @@ class JdspiderItem(scrapy.Item):
     commodity_link = scrapy.Field()
     commodity_name = scrapy.Field()
     commodity_price = scrapy.Field()
+    commodity_num = scrapy.Field()
+    commodity_total = scrapy.Field()

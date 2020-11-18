@@ -27,7 +27,9 @@ class JdSpider(scrapy.Spider):
             item['commodity_id'] = re.search(r'\d+', original_url).group()
             item['commodity_link'] = original_url
             item['commodity_name'] = response.xpath('//*[@id="itemName"]')[0].xpath('string(.)').extract_first().strip()
-            item['commodity_price'] = response.xpath('//*[@id="priceSale"]')[0].xpath('string(.)').extract_first().strip()
+            item['commodity_price'] = re.search(r'\d+(.\d+)', response.xpath('//*[@id="priceSale"]')[0].xpath('string(.)').extract_first().strip()).group()
+            item['commodity_num'] = '1'
+            item['commodity_total'] = str(float(item['commodity_price']) * int(item['commodity_num']))
         except Exception:
             win32api.MessageBox(0, '链接' + original_url + '不存在！')
         yield item
