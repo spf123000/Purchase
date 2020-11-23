@@ -7,18 +7,66 @@
     </div>
     <div id="toolbar" class="btn-group">
 
-        <button id="btn_save" type="button" class="btn btn-default">
+        <button id="btn_submit" type="button" class="btn btn-default">
             <span class="glyphicon glyphicon-save" aria-hidden="true"></span>提交
-        </button>
-        <button id="btn_export" type="button" class="btn btn-default">
-            <span class="glyphicon glyphicon-export" aria-hidden="true"></span>导出
         </button>
         <button id="btn_delete" type="button" class="btn btn-default">
             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
         </button>
     </div>
 
-    
+    <div class="modal fade" id="submit-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        ×
+                    </button>
+                    <h4 class="modal-title"> 提交 </h4>
+                </div>
+                <form id="submit-modal-form" class="form-horizontal" action="">
+                    <div class="modal-body">
+                        <input type="hidden" id="submit_commodity_serial" />
+                        <div class="form-group row">
+                            <label
+                                class="col-sm-3 col-md-3 col-lg-3 col-xl-3 control-label font-normal align-right">所属项目：</label>
+                            <div class="col-sm-7 col-md-7 col-lg-7 col-xl-7">
+                                <div class="file-input-container">
+                                    <select class="form-control" id="submit_commodity_project">
+                                        <option> 请选择所属项目 </option>
+                                        {% for project in projects.items %}
+                                        <option> {{ project.project_name }} </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+ 
+                        <div class="form-group row">
+                            <label
+                                class="col-sm-3 col-md-3 col-lg-3 col-xl-3 control-label font-normal align-right">列支：</label>
+                            <div class="col-sm-7 col-md-7 col-lg-7 col-xl-7">
+                                <div class="file-input-container">
+                                    <select class="form-control" id="submit_commodity_spending" onclick='showspendings()'>
+                                        <option> 请选择列支课题 </option>
+                                        {% for project in projects %}
+                                        <option> {{ project.project_name }} </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="submit" class="btn btn-success" id="submit-modal-form-submit">确认</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade" id="modify-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -71,7 +119,9 @@
     $('#li_commodity').attr('class', 'active');
     let $btn_add = $('#btn_add');
     let $btn_delete = $('#btn_delete');
-    let $btn_submit = $('#modify-modal-form-submit')
+    let $btn_submit = $('#btn_submit');
+    let $btn_modify_submit = $('#modify-modal-form-submit')
+    let $btn_submit_submit = $('#submit-modal-form-submit')
     var tableColumns = [{
             checkbox: true
         },
@@ -143,12 +193,25 @@
         showFooter: true,
         showToggle: true,
         showColumns: true,
+        clickToSelect: true,
         queryParams: function (param) {
             return {};
         },
 
 
     });
+
+    $btn_submit.click(function (e) {
+        $('#submit-modal').modal('show');
+        $.ajax({
+            type: "GET",
+            url: "show_options/",
+            dataType: 'json',
+            data: {}                        
+        });
+
+
+    })
 
     $btn_delete.click(function (e) {
         if (!confirm("是否确认删除？"))
@@ -189,7 +252,16 @@
         $("#modify_commodity_price").val(price);
     }
 
-    $btn_submit.click(function (e) {
+    /*function showprojects(){
+        $.ajax({
+            type: "GET",
+            url: "show_options/",
+            dataType: 'json',
+            data: {}                        
+        });
+    }*/
+
+    $btn_modify_submit.click(function (e) {
         //e.preventDefault();
         $.ajax({
             type: "GET",
