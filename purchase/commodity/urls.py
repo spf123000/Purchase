@@ -7,4 +7,5 @@ urlpatterns = [
     path('show_options/', views.commodity_show_options),
     path('delete/', views.commodity_delete),
     path('modify/', views.commodity_modify),
+    path('submit/', views.commodity_submit),
 ]

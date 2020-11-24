@@ -3,7 +3,7 @@
 
 <div class="container">
     <div class="page-header">
-        <h2>商品管理</h2>
+        <h2>导入商品</h2>
     </div>
     <div id="toolbar" class="btn-group">
 
@@ -35,9 +35,6 @@
                                 <div class="file-input-container">
                                     <select class="form-control" id="submit_commodity_project">
                                         <option> 请选择所属项目 </option>
-                                        {% for project in projects.items %}
-                                        <option> {{ project.project_name }} </option>
-                                        {% endfor %}
                                     </select>
                                 </div>
                             </div>
@@ -50,9 +47,6 @@
                                 <div class="file-input-container">
                                     <select class="form-control" id="submit_commodity_spending" onclick='showspendings()'>
                                         <option> 请选择列支课题 </option>
-                                        {% for project in projects %}
-                                        <option> {{ project.project_name }} </option>
-                                        {% endfor %}
                                     </select>
                                 </div>
                             </div>
@@ -202,15 +196,46 @@
     });
 
     $btn_submit.click(function (e) {
+        var rows = $table.bootstrapTable('getSelections');
+        if (rows.length == 0) {
+            alert("请先选择要提交的记录!");
+            return;
+        } 
         $('#submit-modal').modal('show');
         $.ajax({
             type: "GET",
             url: "show_options/",
             dataType: 'json',
-            data: {}                        
+            data: {},
+            success: function (data){
+                var content='';
+                $.each(data, function(i, val){
+                    content+='<option value='+val.project_id+'>'+val.project_name+'</option>'
+                });
+                $('#submit_commodity_project').html('<option></option>'+content)
+            }                     
+        });
+    })
+
+    $btn_submit_submit.click(function (e) {
+        var rows = $table.bootstrapTable('getSelections');
+        var ids = new Array();
+        $(rows).each(function () {
+            ids.push(this.commodity_serial);
         });
 
-
+        $.ajax({
+            type: "GET",
+            url: "submit/",
+            dataType: 'json',
+            data: { ids: ids, project: $("#submit_commodity_project").val()},
+            success: function (data) {
+                if (data.ret) {
+                    $("#modify-modal").modal("hide");
+                    //$table.bootstrapTable("refresh");
+                }
+            }
+        });
     })
 
     $btn_delete.click(function (e) {
@@ -251,15 +276,6 @@
         $("#modify_commodity_num").val(num);
         $("#modify_commodity_price").val(price);
     }
-
-    /*function showprojects(){
-        $.ajax({
-            type: "GET",
-            url: "show_options/",
-            dataType: 'json',
-            data: {}                        
-        });
-    }*/
 
     $btn_modify_submit.click(function (e) {
         //e.preventDefault();

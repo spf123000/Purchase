@@ -1,5 +1,5 @@
 from django.db import models
-from project.models import project
+# from project.models import project
 
 # Create your models here.
 class commodity(models.Model):

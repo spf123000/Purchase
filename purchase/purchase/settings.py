@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'commodity.apps.CommodityConfig',
     'project.apps.ProjectConfig',
+    'report.apps.ReportConfig',
 ]
 
 MIDDLEWARE = [
